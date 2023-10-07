@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.jasper.tagplugins.jstl.core.Out;
 
@@ -31,23 +32,16 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		 System.out.println("Session Before Invalidate "+request.getSession(false));		 
-			
+
+		 HttpSession session = request.getSession(false);
 		 PrintWriter out = response.getWriter();
-		 if(request.getSession(false) != null) {
+		 if(session != null && session.getAttribute("username") != null) {
+			 session.removeAttribute("username");
 			 request.getSession().invalidate();
-			 out.print("User Logged Out");
+			 response.sendRedirect("logout.jsp?message=User Logged Out successfully");
 		 }else {
-			 out.print("User already Logged Out");
+			 response.sendRedirect("logout.jsp?message=Already logged out");
 		 }
-		 
-		 System.out.println("Session After Invalidate "+request.getSession(false));	
-		 
-		
-		
-		
 		
 	}
 
