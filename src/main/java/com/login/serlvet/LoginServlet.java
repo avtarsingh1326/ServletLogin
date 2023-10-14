@@ -40,17 +40,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setContentType("text/html");
-		String username = request.getParameter("username");
+		String username = request.getParameter("username").toString().trim();
  		String password = request.getParameter("password");
 		
  		HttpSession session = request.getSession();
  		
  		PrintWriter out =  response.getWriter();
  		LoginService loginService = new LoginService();
+ 	
  		
  		if(loginService.login(username, password)) {
  			session.setAttribute("username", username);
- 			response.sendRedirect("myprofile.jsp?username=" + username);
+ 			response.sendRedirect("myprofile.jsp");
  		}else {
  			response.sendRedirect("logout.jsp?message=Username or password is incorrect");
  		}

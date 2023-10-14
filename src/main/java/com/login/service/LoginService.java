@@ -46,22 +46,27 @@ public class LoginService {
 	
 	
 	
-	public UserLogin getUserLoginDetails(UserLogin userLogin) {
+	public UserLogin getUserLoginDetails(String username, String password) {
 		
 		try {
 			connection = DatabaseConnection.initializeDatabase();
 			
 			PreparedStatement preparedStatement = connection.prepareStatement
 					("select * from user_login where username=? and password=?");
-			preparedStatement.setString(1, userLogin.getUsername());  //Set Username and password in Query
-			preparedStatement.setString(2, userLogin.getPassword());
+			
+			
+			preparedStatement.setString(1, username);  //Set Username and password in Query
+			preparedStatement.setString(2, password);
+			
+			
+			
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			this.userLogin = new UserLogin();  // Created a new object to return 
+			userLogin = new UserLogin();  // Created a new object to return 
 			
 			while (rs.next()) {
-			this.userLogin.setUsername(rs.getString("username"));   // Pass Coloum name 
-			this.userLogin.setPassword(rs.getString("password"));
+			userLogin.setUsername(rs.getString("username"));   // Pass Coloum name 
+			userLogin.setPassword(rs.getString("password"));
 			}
 			connection.close();
 		}catch (Exception e) {
@@ -77,7 +82,7 @@ public class LoginService {
 				e.printStackTrace();
 			}
 		}		
-			return this.userLogin;
+			return userLogin;
 		}
 	
 	
