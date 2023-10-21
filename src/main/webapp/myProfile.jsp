@@ -26,6 +26,32 @@ td, th {
 tr:nth-child(even) {
 	background-color: #dddddd;
 }
+
+.button-div {
+	margin: 10px;
+}
+
+.button-div button {
+	padding: 5px;
+	font-size: 20px;
+	background-color: #04AA6D;
+	border: 1px solid;
+	box-shadow: 1px;
+}
+
+.span-button {
+	padding: 5px;
+	font-size: 20px;
+	background-color: #04AA6D;
+	border: 1px solid;
+	box-shadow: 1px;
+	color: black;
+}
+
+a {
+	text-decoration: none;
+}
+
 </style>
 </head>
 
@@ -42,9 +68,16 @@ tr:nth-child(even) {
 		</ul>
 	</nav>
 
-	<h1><%=session.getAttribute("username")%>
+
+
+	<h1><%=session.getAttribute("username").toString().toUpperCase()%>
 		Logged in Successfully
 	</h1>
+
+
+	<div class="button-div">
+		<a href="addUser.jsp"> <span class="span-button">Add User</span></a>
+	</div>
 
 
 	<div>
@@ -56,19 +89,22 @@ tr:nth-child(even) {
 				<th>Course</th>
 				<th>Action</th>
 			</tr>
-		<%
+			<%
 			StudentService studentService = new StudentService();
-		
+
 			List<Student> list = studentService.getAllStudents();
-		
-			for(Student student : list){ %>
+
+			for (Student student : list) {
+			%>
 			<tr>
 				<td><%=student.getId()%></td>
 				<td><%=student.getName()%></td>
 				<td><%=student.getAge()%></td>
 				<td><%=student.getCourse()%></td>
-				<td></td>
-			</tr>	
+				<td><a href="/LoginExample2/UserServlet?action=delete&id=<%=student.getId()%>"> <span class="span-button">Delete</span>
+				</a><a href="/LoginExample2/UserServlet?action=update&id=<%=student.getId()%>"> <span class="span-button">Update</span>
+				</a></td>
+			</tr>
 			<%}%>
 		</table>
 	</div>
