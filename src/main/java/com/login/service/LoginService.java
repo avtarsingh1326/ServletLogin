@@ -53,13 +53,8 @@ public class LoginService {
 			
 			PreparedStatement preparedStatement = connection.prepareStatement
 					("select * from user_login where username=? and password=?");
-			
-			
 			preparedStatement.setString(1, username);  //Set Username and password in Query
 			preparedStatement.setString(2, password);
-			
-			
-			
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			userLogin = new UserLogin();  // Created a new object to return 

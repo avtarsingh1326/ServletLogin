@@ -52,7 +52,29 @@ a {
 	text-decoration: none;
 }
 
+.sort {
+	padding: 5px;
+	font-size: 20px;
+	background-color: #04AA6D;
+	border: 1px solid;
+	box-shadow: 1px;
+	color: black;
+}
+
+select {
+	padding: 9px;
+}
 </style>
+
+<script type="text/javascript">
+	function getSortedData(sortVal) {
+		document.getElementById("sortType").value = sortVal;
+		document.getElementById("sortSubmit").click();
+	}
+</script>
+
+
+
 </head>
 
 <body>
@@ -74,9 +96,25 @@ a {
 		Logged in Successfully
 	</h1>
 
+	<%
+	String sortType = "";
+	if (request.getParameter("sortType") != null) {
+		sortType = request.getParameter("sortType").toString().trim();
+		
+		
+	}
+	%>
+
+
 
 	<div class="button-div">
-		<a href="addUser.jsp"> <span class="span-button">Add User</span></a>
+		<a href="addUser.jsp"> <span class="span-button">Add User</span></a> <label
+			class="sort">Sort By :</label> <select
+			onchange="getSortedData(this.value);">
+			<option <% if(sortType.equals("") || sortType.equals("id")){%>selected<% }%> value="id">Id</option>
+			<option <% if(sortType.equals("name")){%>selected<% }%> value="name">Name</option>
+			<option <% if(sortType.equals("age")){%>selected<% }%> value="age">Age</option>
+		</select>
 	</div>
 
 
@@ -92,7 +130,7 @@ a {
 			<%
 			StudentService studentService = new StudentService();
 
-			List<Student> list = studentService.getAllStudents();
+			List<Student> list = studentService.getAllStudents(sortType);
 
 			for (Student student : list) {
 			%>
@@ -101,8 +139,12 @@ a {
 				<td><%=student.getName()%></td>
 				<td><%=student.getAge()%></td>
 				<td><%=student.getCourse()%></td>
-				<td><a href="/LoginExample2/UserServlet?action=delete&id=<%=student.getId()%>"> <span class="span-button">Delete</span>
-				</a><a href="/LoginExample2/UserServlet?action=update&id=<%=student.getId()%>"> <span class="span-button">Update</span>
+				<td><a
+					href="/LoginExample2/UserServlet?action=delete&id=<%=student.getId()%>">
+						<span class="span-button">Delete</span>
+				</a><a
+					href="/LoginExample2/UserServlet?action=update&id=<%=student.getId()%>">
+						<span class="span-button">Update</span>
 				</a></td>
 			</tr>
 			<%}%>
@@ -111,7 +153,10 @@ a {
 
 
 
-
+	<form action="/LoginExample2/MyProfileServlet">
+		<input id="sortType" value="id" type="hidden" name="sortType">
+		<input id="sortSubmit" type="submit" style="display: none;">
+	</form>
 
 
 

@@ -31,8 +31,13 @@ public class MyProfileServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		
+		String sortType = "";
+		if(request.getParameter("sortType") != null) {
+			sortType = request.getParameter("sortType").toString();
+		}
+		
 		if(session != null && session.getAttribute("username")!= null) {
-			response.sendRedirect("myprofile.jsp?username="+ session.getAttribute("username"));
+			response.sendRedirect("myprofile.jsp?username="+ session.getAttribute("username")+"&sortType=" + sortType);
 		}else {
 			response.sendRedirect("login.jsp");
 		}	

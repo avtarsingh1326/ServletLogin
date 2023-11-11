@@ -17,12 +17,16 @@ public class StudentService {
 	private List<Student> studentList;
 	private boolean flag;
 
-	public List<Student> getAllStudents() {
+	public List<Student> getAllStudents(String sortType) {
 
 		try {
 			connection = DatabaseConnection.initializeDatabase();
+			
+			if(sortType.trim().equals("")) {
+				sortType = "id";
+			}
 
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from student");
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from student order by "+sortType+" asc");
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
