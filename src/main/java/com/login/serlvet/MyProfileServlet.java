@@ -1,6 +1,8 @@
 package com.login.serlvet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +39,10 @@ public class MyProfileServlet extends HttpServlet {
 		}
 		
 		if(session != null && session.getAttribute("username")!= null) {
-			response.sendRedirect("myprofile.jsp?username="+ session.getAttribute("username")+"&sortType=" + sortType);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("myprofile.jsp");
+			request.setAttribute("sortType", sortType);
+			request.setAttribute("username", session.getAttribute("username"));
+			dispatcher.forward(request, response);
 		}else {
 			response.sendRedirect("login.jsp");
 		}	

@@ -3,6 +3,7 @@ package com.login.serlvet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,9 @@ public class LoginServlet extends HttpServlet {
  		
  		if(loginService.login(username, password)) {
  			session.setAttribute("username", username);
- 			response.sendRedirect("myprofile.jsp");
+ 			RequestDispatcher dispatcher = request.getRequestDispatcher("MyProfileServlet");
+ 			System.out.println("*******");
+			dispatcher.forward(request, response);
  		}else {
  			response.sendRedirect("logout.jsp?message=Username or password is incorrect");
  		}

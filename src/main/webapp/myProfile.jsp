@@ -99,9 +99,7 @@ select {
 	<%
 	String sortType = "";
 	if (request.getParameter("sortType") != null) {
-		sortType = request.getParameter("sortType").toString().trim();
-		
-		
+		sortType = request.getAttribute("sortType").toString().trim();			
 	}
 	%>
 

@@ -29,11 +29,12 @@
 	</nav>
 
 	<div style="width: 50%">
-		<form action="/LoginExample2/UserServlet" method="post" style="padding : 10px">
+		<form action="/LoginExample2/UserServlet" method="post" style="padding : 10px" enctype="multipart/form-data" >
 			<label>Student Name: </label> <input type="text" name="studentName" required="required">
 			<label>Student Age: </label> <input type="text" name="age" required="required"> <label>Student
 				Course: </label> <input type="text" name="course" required="required"><br><br>
-				<input type="hidden" name="action" value="add">
+				<label>Student Image</label> <input name="file" type="file">
+				<input type="hidden" name="action" value="add"></br></br>
 				<input type="submit" value="Add User">
 		</form>
 		<div></div>
