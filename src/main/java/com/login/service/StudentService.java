@@ -38,6 +38,7 @@ public class StudentService {
 				student.setName(resultSet.getString("name"));
 				student.setAge(resultSet.getInt("age"));
 				student.setCourse(resultSet.getString("course"));
+				student.setProfileImage(resultSet.getString("profileImage"));
 				studentList.add(student);
 			}
 
@@ -61,11 +62,11 @@ public class StudentService {
 		try {
 			connection = DatabaseConnection.initializeDatabase();
 			
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into student(name,age,course) values (?,?,?)");
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into student(name,age,course,profileImage) values (?,?,?,?)");
 			preparedStatement.setString(1, student.getName());
 			preparedStatement.setInt(2, student.getAge());
 			preparedStatement.setString(3, student.getCourse());
-			
+			preparedStatement.setString(4, student.getProfileImage());
 			int rowCount = preparedStatement.executeUpdate();
 			if(rowCount > 0) flag= true;
 			

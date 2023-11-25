@@ -37,9 +37,9 @@ public class MyProfileServlet extends HttpServlet {
 		if(request.getParameter("sortType") != null) {
 			sortType = request.getParameter("sortType").toString();
 		}
-		
+		System.out.println("mmmm");
 		if(session != null && session.getAttribute("username")!= null) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("myprofile.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("profile.jsp");
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("username", session.getAttribute("username"));
 			dispatcher.forward(request, response);

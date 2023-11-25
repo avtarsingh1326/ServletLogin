@@ -64,6 +64,17 @@ a {
 select {
 	padding: 9px;
 }
+.profile_image{
+	height: 100px;
+    width: 100px;
+}
+.profile_image img{
+	
+	height: 100%;
+    width: 100%;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -123,13 +134,14 @@ select {
 				<th>Student Name</th>
 				<th>Age</th>
 				<th>Course</th>
-				<th>Image</th>
+				<th>Images</th>
 				<th>Action</th>
 			</tr>
 			<%
 			StudentService studentService = new StudentService();
 
 			List<Student> list = studentService.getAllStudents(sortType);
+			String image= "noprofile.jpg";
 
 			for (Student student : list) {
 			%>
@@ -138,7 +150,15 @@ select {
 				<td><%=student.getName()%></td>
 				<td><%=student.getAge()%></td>
 				<td><%=student.getCourse()%></td>
-				<td></td>
+				
+				<%
+					if(student.getProfileImage() != null){
+						image = student.getProfileImage().trim();
+					}
+				
+				%>
+				
+				<td><div class="profile_image"><img alt="img" src="/LoginExample2/uploadedImages/<%=image%>"></div></td>
 				<td><a
 					href="/LoginExample2/UserServlet?action=delete&id=<%=student.getId()%>">
 						<span class="span-button">Delete</span>

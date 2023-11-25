@@ -46,7 +46,6 @@ public class LogsFilter extends HttpFilter implements Filter {
 
         // Get Requested URL
         StringBuffer requestURL = httpRequest.getRequestURL();
-        System.out.println("Requested URL: " + requestURL);
 	
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

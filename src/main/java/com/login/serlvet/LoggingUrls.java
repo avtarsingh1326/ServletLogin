@@ -40,13 +40,10 @@ public class LoggingUrls extends HttpFilter implements Filter {
 		// place your code here
 
 		
-		System.out.println("Before Calling the Request");
+		//System.out.println("Before Calling the Request");
 		long currentMillisecondsBefore = System.currentTimeMillis();
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		
-		System.out.println(httpRequest.getRequestURI());
-		System.out.println(httpRequest.getRequestURL());
 		
 		
 		// pass the request along the filter chain
@@ -55,8 +52,7 @@ public class LoggingUrls extends HttpFilter implements Filter {
 		long currentMillisecondsAfterRequestProcessed = System.currentTimeMillis();
 		
 		
-		System.out.println("After Processing the Request");
-		System.out.println("Time Take by Request to complete " + (currentMillisecondsAfterRequestProcessed - currentMillisecondsBefore));
+//		System.out.println("Time Take by Request to complete " + (currentMillisecondsAfterRequestProcessed - currentMillisecondsBefore));
 		
 	}
 

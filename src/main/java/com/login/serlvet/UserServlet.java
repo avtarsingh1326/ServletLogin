@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.login.beans.Constants;
 import com.login.beans.Student;
 import com.login.service.StudentService;
 
@@ -56,6 +58,7 @@ public class UserServlet extends HttpServlet {
 		int age = 0;
 		String course = "";
 		String action = "";
+		String fileName = "";
 		int id = 0;
 
 		if (request.getParameter("studentName") != null) {
@@ -75,45 +78,46 @@ public class UserServlet extends HttpServlet {
 			id = Integer.parseInt(request.getParameter("id").toString().trim());
 		}
 
-		Part part = request.getPart("file");
-		String uploadPath = "/Users/avtarbadwal/eclipse-workspace/LoginExample2/src/main/webapp";
-
-		File file = new File(uploadPath+"/"+ id);
-
-		try (InputStream input = part.getInputStream();
-
-				OutputStream output = new FileOutputStream(file)) {
-			byte[] buffer = new byte[4096];
-			int bytesRead = -1;
-			while ((bytesRead = input.read(buffer)) != -1) {
-				output.write(buffer, 0, bytesRead);
-				System.out.println(buffer);
-			}
-		}
-		
-
 		Student student = new Student();
 		StudentService studentService = new StudentService();
 
 		if (action.equals("add")) {
+			try {
+
+				Part part = request.getPart("file");
+				// If the part is a file, process it
+				if (!part.getSubmittedFileName().isEmpty()) {
+					// Get the file name
+					fileName = new File(part.getSubmittedFileName()).getName();
+					String filePath = Constants.path + File.separator + fileName;
+					File storeFile = new File(filePath);
+					System.out.println("File name and path : " + filePath);
+					// Save the file to the specified directory
+					part.write(storeFile.toString());
+
+				}
+			} catch (Exception e) {
+				request.setAttribute("message", "File Upload Failed due to " + e);
+			}
 			System.out.println("Debug Insert :: " + studentName + " " + age + " " + course);
 			student.setName(studentName);
 			student.setAge(age);
 			student.setCourse(course);
+			student.setProfileImage(fileName);
 			boolean dataInserted = studentService.addUserDetails(student);
 			if (dataInserted) {
-				response.sendRedirect("myprofile.jsp");
+				response.sendRedirect("profile.jsp");
 			} else {
-				response.sendRedirect("myprofile.jsp");
+				response.sendRedirect("profile.jsp");
 			}
 		}
 
 		if (action.equals("delete")) {
 
 			if (studentService.deleteUserByUserId(id)) {
-				response.sendRedirect("myprofile.jsp");
+				response.sendRedirect("profile.jsp");
 			} else {
-				response.sendRedirect("myprofile.jsp");
+				response.sendRedirect("profile.jsp");
 			}
 
 		}
@@ -131,7 +135,7 @@ public class UserServlet extends HttpServlet {
 			student.setAge(age);
 			studentService.updateUserByUserId(student);
 
-			response.sendRedirect("myprofile.jsp");
+			response.sendRedirect("profile.jsp");
 
 		}
 

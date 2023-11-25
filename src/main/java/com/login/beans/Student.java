@@ -6,6 +6,7 @@ public class Student {
 	private String name;
 	private int age;
 	private String course;
+	private String profileImage;
 	
 	public int getId() {
 		return id;
@@ -31,5 +32,13 @@ public class Student {
 	public void setCourse(String course) {
 		this.course = course;
 	}
+	public String getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+	
+	
 	
 }
