@@ -134,10 +134,15 @@ public class UserServlet extends HttpServlet {
 			student.setCourse(course);
 			student.setAge(age);
 			studentService.updateUserByUserId(student);
-
 			response.sendRedirect("profile.jsp");
-
 		}
+		
+		
+		if (action.equals("updateImage")) {
+			System.out.print("update Image");
+		}
+		
+		
 
 	}
 

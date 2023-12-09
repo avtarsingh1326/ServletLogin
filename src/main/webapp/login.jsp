@@ -31,8 +31,11 @@
 .login_container form{
 	margin: 25px;
 }
-
-
+.login_container select{
+	width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 </style>
 
 </head>
@@ -52,8 +55,15 @@
 
 	<div class="login_container">
 		<form class="form" method="post" action="/LoginExample2/LoginServlet">
-			<label>UserName: </label><input type="text" name="username">
+			<label>Username: </label><input type="text" name="username">
+			<br><span style="padding: 10px"></span><br>
 			<label>Password: </label><input type="password" name="password">
+			<br><span style="padding: 10px"></span><br>
+			<label>User Type: </label>
+			<select name="userType">
+				<option value="admin">Admin</option>
+				<option value="student">Student</option>
+			</select>
 			<br><span style="padding: 10px"></span><br>
 			<input class="login_container_submit" type="submit" value="Login">
 		</form>
